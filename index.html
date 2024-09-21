@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #fff9c4; /* Soft yellow background */
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+            margin-top: 50px;
+        }
+        
+        h3 {
+            color: #fcd303; /* Deep orange for headings */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        input, select {
+            border: 1px solid #ff9800; /* Orange border for inputs */
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        
+        input:focus, select:focus {
+            border-color: #f57c00; /* Darker orange on focus */
+            outline: none;
+            box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+        }
+        
+        .btn {
+            background-color: #ffeb3b; /* Yellow color for the button */
+            color: #333; /* Dark text color */
+            font-size: 18px;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #fdd835; /* Slightly darker yellow on hover */
+        }
+        
+        #card-section, #upi-section {
+            padding: 20px;
+            border: 1px solid #ff9800; /* Orange border */
+            border-radius: 8px;
+            background-color: #fff3e0; /* Light orange background */
+            margin-top: 20px;
+        }
+        
+        .text-center {
+            margin-bottom: 20px;
+        }
+        
+        .buton{
+            width: 40vw;
+            margin: 20px 25vw 0 25vw;
+
+            border-radius: 10px;
+            background-color: #fcd303;
+        }
+    </style>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h3 class="text-center">Secure Payment Gateway</h3>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="amount">Donation Amount (INR)</label>
+                <input type="number" class="form-control" id="amount" required min="1">
+            </div>
+
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="payment-method" class="form-control" required>
+                    <option value="" disabled selected>Select Payment Method</option>
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="upi">UPI</option>
+                </select>
+            </div>
+
+            <div id="card-section" style="display: none;">
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" required>
+                </div>
+                <div class="form-group">
+                    <label for="card-number">Card Number</label>
+                    <input type="text" class="form-control" id="card-number" required>
+                </div>
+                <div class="form-group">
+                    <label for="cvc">CVC</label>
+                    <input type="text" class="form-control" id="cvc" required maxlength="4">
+                </div>
+            </div>
+
+            <div id="upi-section" style="display: none;">
+                <div class="form-group">
+                    <label for="upi-app">Choose UPI App</label>
+                    <select id="upi-app" class="form-control" required>
+                        <option value="" disabled selected>Select UPI App</option>
+                        <option value="paytm">Paytm</option>
+                        <option value="gpay">Google Pay</option>
+                        <option value="phonepe">PhonePe</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="upi-id">UPI ID</label>
+                    <input type="text" class="form-control" id="upi-id" placeholder="your-upi-id@bank" required>
+                </div>
+            </div>
+
+            <button type="submit" class="buton">Proceed to pay</button>
+        </form>
+    </div>
+    <script>const form = document.getElementById('payment-form');
+        const paymentMethodSelect = document.getElementById('payment-method');
+        const cardSection = document.getElementById('card-section');
+        const upiSection = document.getElementById('upi-section');
+        
+        paymentMethodSelect.addEventListener('change', function() {
+            if (paymentMethodSelect.value === 'card') {
+                cardSection.style.display = 'block';
+                upiSection.style.display = 'none';
+            } else if (paymentMethodSelect.value === 'upi') {
+                cardSection.style.display = 'none';
+                upiSection.style.display = 'block';
+            }
+        });
+        
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+        
+            const amount = document.getElementById('amount').value;
+            const name = document.getElementById('name').value; // Assuming you want to add this input
+            const email = document.getElementById('email').value; // Assuming you want to add this input
+        
+            if (paymentMethodSelect.value === 'card') {
+                const dob = document.getElementById('dob').value;
+                const cardNumber = document.getElementById('card-number').value;
+                const cvc = document.getElementById('cvc').value;
+        
+                // Handle credit/debit card payment logic here
+                console.log('Processing card payment:', { amount, dob, cardNumber, cvc });
+                // You would send this data to your server for processing
+            } else if (paymentMethodSelect.value === 'upi') {
+                const upiId = document.getElementById('upi-id').value;
+                const upiApp = document.getElementById('upi-app').value;
+        
+                // Handle UPI payment logic here
+                console.log('Processing UPI payment:', { amount, upiId, upiApp });
+                // You would send this data to your server for processing
+            }
+        });
+        </script>
+</body>
+</html>
+
+</body>
+</html>
